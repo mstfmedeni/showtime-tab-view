@@ -83,9 +83,7 @@ export function SceneComponent<P extends object>({
     {
       onScroll: (e) => {
         scrollY.value = e.contentOffset.y;
-
         shareAnimatedValue.value = e.contentOffset.y;
-
         if (propOnScroll) {
           runOnJS(propOnScroll as never)({ nativeEvent: e });
         }
