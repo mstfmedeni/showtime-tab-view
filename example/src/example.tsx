@@ -1,14 +1,14 @@
 import React, { useCallback, useState } from "react";
 import { StatusBar, Text, View } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
-import { Route, TabView } from "@showtime-xyz/tab-view";
-import { TabFlashList } from "./tab-flash-list";
+import { Route, CollapsibleTabView } from "@showtime-xyz/tab-view";
+import { TabFlashList } from "./tab-flash-list/index";
 const StatusBarHeight = StatusBar.currentHeight ?? 0;
 const TabScene = ({ route }: any) => {
   return (
     <TabFlashList
       index={route.index}
-      data={new Array(20).fill(0)}
+      data={new Array(100).fill(0)}
       estimatedItemSize={60}
       renderItem={({ index }) => {
         return (
@@ -64,7 +64,7 @@ export function Example() {
     <View style={{ height: 300, backgroundColor: "#000" }}></View>
   );
   return (
-    <TabView
+    <CollapsibleTabView
       onStartRefresh={onStartRefresh}
       isRefreshing={isRefreshing}
       navigationState={{ index, routes }}

@@ -1,15 +1,26 @@
-import React from 'react'
-import type { ScrollViewProps } from 'react-native'
+import React from "react";
+import type { ScrollViewProps } from "react-native";
 
-import Animated from 'react-native-reanimated'
-import { SceneComponent } from './scene'
+import Animated from "react-native-reanimated";
+import { SceneComponent } from "./scene";
 
 type TabScrollViewProps = ScrollViewProps & {
-  index: number
+  index: number;
+};
+
+function TabFlashListScrollViewComponent(
+  props: TabScrollViewProps,
+  ref: React.Ref<unknown>
+) {
+  return (
+    <SceneComponent
+      {...props}
+      forwardedRef={ref}
+      ContainerView={Animated.ScrollView}
+    />
+  );
 }
 
-function TabFlashListScrollViewComponent(props: TabScrollViewProps, ref: React.Ref<unknown>) {
-  return <SceneComponent {...props} forwardedRef={ref} ContainerView={Animated.ScrollView} />
-}
-
-export const TabFlashListScrollView = React.forwardRef(TabFlashListScrollViewComponent)
+export const TabFlashListScrollView = React.forwardRef(
+  TabFlashListScrollViewComponent
+);

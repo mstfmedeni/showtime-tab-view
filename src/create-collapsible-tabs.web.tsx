@@ -83,7 +83,7 @@ function CollapsibleHeaderTabView<T extends Route>(
       }
     ) => {
       return renderTabBarProp ? (
-        renderTabBarProp(tabbarProps)
+        renderTabBarProp(tabbarProps as any)
       ) : (
         <TabBar {...tabbarProps} />
       );

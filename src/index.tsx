@@ -1,13 +1,16 @@
-import { TabView } from 'react-native-tab-view'
+import { TabView } from "react-native-tab-view";
 
-import { createCollapsibleTabsComponent } from './create-collapsible-tabs'
+import { createCollapsibleTabsComponent } from "./create-collapsible-tabs";
 
-export { TabFlatList, TabScrollView, TabSectionList } from './scrollable-view'
+export { TabFlatList, TabScrollView, TabSectionList } from "./scrollable-view";
 
-export * from './create-collapsible-tabs'
-export * from './scene'
-export * from './types'
-export type { TabScrollViewProps, TabFlatListProps, TabSectionListProps } from './scrollable-view'
-export { useHeaderTabContext } from './context'
-export { TabInfiniteScrollList } from './tab-flash-list'
-export const CollapsibleTabView = createCollapsibleTabsComponent(TabView)
+export * from "./create-collapsible-tabs";
+export * from "./scene";
+export * from "./types";
+export type {
+  TabScrollViewProps,
+  TabFlatListProps,
+  TabSectionListProps,
+} from "./scrollable-view";
+export { useHeaderTabContext } from "./context";
+export const CollapsibleTabView = createCollapsibleTabsComponent(TabView);
