@@ -3,16 +3,41 @@ import { StyleSheet } from "react-native";
 
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
+  runOnJS,
+  scrollTo,
+  useAnimatedRef,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-  runOnJS,
 } from "react-native-reanimated";
 
+import { useSyncInitialPosition } from "./hooks/use-sync-initial-position";
 import { useHeaderTabContext } from "./context";
-import { useSharedScrollableRef, useSyncInitialPosition } from "./hooks";
 import type { SceneProps } from "./types";
+import { SCROLLABLE_STATE } from "./contants";
+
+function mergeRefs<T>(
+  ...inputRefs: (React.Ref<T> | undefined)[]
+): React.Ref<T> | React.RefCallback<T> {
+  const filteredInputRefs = inputRefs.filter(Boolean);
+
+  if (filteredInputRefs.length <= 1) {
+    const firstRef = filteredInputRefs[0];
+
+    return firstRef || null;
+  }
+
+  return function mergedRefs(ref) {
+    for (const inputRef of filteredInputRefs) {
+      if (typeof inputRef === "function") {
+        inputRef(ref);
+      } else if (inputRef) {
+        (inputRef as React.MutableRefObject<T | null>).current = ref;
+      }
+    }
+  };
+}
 
 export function SceneComponent<P extends object>({
   index,
@@ -27,14 +52,12 @@ export function SceneComponent<P extends object>({
 }: SceneProps<P>) {
   //#region refs
   const nativeGestureRef = useRef(Gesture.Native());
-  const scollViewRef =
-    useSharedScrollableRef<Animated.ScrollView>(forwardedRef);
+  const scollViewRef = useAnimatedRef<Animated.ScrollView>();
   //#endregion
 
   //#region hooks
   const {
     shareAnimatedValue,
-    headerHeight,
     expectHeight,
     curIndexValue,
     refHasChanged,
@@ -56,17 +79,19 @@ export function SceneComponent<P extends object>({
   //#endregion
 
   //#region methods
-  const onScrollAnimateEvent = useAnimatedScrollHandler({
-    onScroll: (e) => {
-      const moveY = e.contentOffset.y;
-      scrollY.value = moveY;
-      if (curIndexValue.value !== index) return;
-      shareAnimatedValue.value = moveY;
-      if (propOnScroll) {
-        runOnJS(propOnScroll as any)({ nativeEvent: e });
-      }
+  const onScrollAnimateEvent = useAnimatedScrollHandler(
+    {
+      onScroll: (e) => {
+        scrollY.value = e.contentOffset.y;
+        shareAnimatedValue.value = e.contentOffset.y;
+        if (propOnScroll) {
+          runOnJS(propOnScroll as never)({ nativeEvent: e });
+        }
+      },
     },
-  });
+    []
+  );
+
   // adjust the scene size
   const _onContentSizeChange = useCallback(
     (contentWidth: number, contentHeight: number) => {
@@ -83,7 +108,7 @@ export function SceneComponent<P extends object>({
     refHasChanged?.(nativeGestureRef.current);
   }, [refHasChanged]);
   useEffect(() => {
-    if (scollViewRef && scollViewRef.current) {
+    if (scollViewRef?.current) {
       updateSceneInfo({
         scrollRef: scollViewRef,
         index,
@@ -97,7 +122,7 @@ export function SceneComponent<P extends object>({
       <GestureDetector gesture={nativeGestureRef.current}>
         <ContainerView
           {...restProps}
-          ref={scollViewRef}
+          ref={mergeRefs(scollViewRef, forwardedRef)}
           scrollEventThrottle={16}
           directionalLockEnabled
           contentContainerStyle={[
@@ -110,7 +135,7 @@ export function SceneComponent<P extends object>({
           onContentSizeChange={_onContentSizeChange}
           onScroll={onScrollAnimateEvent}
           scrollIndicatorInsets={{
-            top: headerHeight,
+            top: scrollViewPaddingTop,
             ...scrollIndicatorInsets,
           }}
           // bounces={false}

@@ -6,21 +6,25 @@ import React, {
 } from "react";
 
 import {
-  NavigationState,
-  SceneRendererProps,
+  type NavigationState,
+  type SceneRendererProps,
   TabBar,
-  TabView,
-  TabViewProps,
+  type TabDescriptor,
+  type TabView,
+  type TabViewProps,
 } from "react-native-tab-view";
 
-import { GestureContainer, GestureContainerRef } from "./gesture-container";
+import {
+  GestureContainer,
+  type GestureContainerRef,
+} from "./gesture-container";
 import type {
   CollapsibleHeaderProps,
   Route,
   TabViewCustomRenders,
 } from "./types";
 
-export type CollapsibleTabViewRef = {};
+export type CollapsibleTabViewRef = object;
 export type CollapsibleTabViewProps<T extends Route> = Partial<
   TabViewProps<T>
 > &
@@ -71,6 +75,7 @@ function CollapsibleHeaderTabView<T extends Route>({
     (
       tabbarProps: SceneRendererProps & {
         navigationState: NavigationState<T>;
+        options: Record<string, TabDescriptor<T>> | undefined;
       }
     ) => {
       return props?.renderTabBar ? (
@@ -91,17 +96,16 @@ function CollapsibleHeaderTabView<T extends Route>({
         renderTabBar={(
           tabbarProps: SceneRendererProps & {
             navigationState: NavigationState<T>;
+            options: Record<string, TabDescriptor<T>> | undefined;
           }
         ) => e.renderTabBarContainer(renderTabBar(tabbarProps))}
-        renderScene={(props: any) =>
-          e.renderSceneHeader(renderScene(props), props)
-        }
+        renderScene={(props) => e.renderSceneHeader(renderScene(props), props)}
       />
     );
   };
 
   return (
-    //@ts-ignore
+    // @ts-expect-error Needs fixing
     <GestureContainer
       ref={gestureContainerRef}
       initialPage={initialPageRef.current}

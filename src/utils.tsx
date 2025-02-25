@@ -1,12 +1,13 @@
 import { Platform } from "react-native";
 
-import Animated, {
+import {
+  type SharedValue,
   runOnJS,
   scrollTo,
   withTiming,
 } from "react-native-reanimated";
 
-export function _ScrollTo(ref: any, x: number, y: number, animated: boolean) {
+export function _ScrollTo(ref: never, x: number, y: number, animated: boolean) {
   "worklet";
   if (!ref) return;
   scrollTo(ref, x, y, animated);
@@ -22,9 +23,9 @@ export const animateToRefresh = ({
   destPoi,
   onStartRefresh,
 }: {
-  transRefreshing: Animated.SharedValue<number>;
-  isRefreshing: Animated.SharedValue<boolean>;
-  isRefreshingWithAnimation: Animated.SharedValue<boolean>;
+  transRefreshing: SharedValue<number>;
+  isRefreshing: SharedValue<boolean>;
+  isRefreshingWithAnimation: SharedValue<boolean>;
   isToRefresh: boolean;
   destPoi: number;
   onStartRefresh?: () => void;

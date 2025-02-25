@@ -1,33 +1,35 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type React from "react";
 import type { ComponentClass } from "react";
 import type { ScrollViewProps } from "react-native";
 
 import type { NativeGesture } from "react-native-gesture-handler";
-import type Animated from "react-native-reanimated";
+import type { SharedValue } from "react-native-reanimated";
 import type {
   TabViewProps,
   Route as TabViewRoute,
 } from "react-native-tab-view";
 
 export type Route = TabViewRoute & {
+  key?: string;
   index: number;
   subtitle?: string | number;
 };
 
 export enum RefreshTypeEnum {
-  Idle,
-  Pending,
-  Success,
-  Refreshing,
-  Finish,
-  Cancel,
+  Idle = 0,
+  Pending = 1,
+  Success = 2,
+  Refreshing = 3,
+  Finish = 4,
+  Cancel = 5,
 }
 
 export type CollapsibleHeaderProps<T extends Route> = {
   initHeaderHeight?: number;
   renderScrollHeader?: () => React.ReactElement | null;
-  overridenShareAnimatedValue?: Animated.SharedValue<number>;
-  overridenTranslateYValue?: Animated.SharedValue<number>;
+  overridenShareAnimatedValue?: SharedValue<number>;
+  overridenTranslateYValue?: SharedValue<number>;
   initTabbarHeight?: number;
   minHeaderHeight?: number;
   overflowHeight?: number;
@@ -41,8 +43,8 @@ export type CollapsibleHeaderProps<T extends Route> = {
   refreshHeight?: number;
   overflowPull?: number;
   pullExtendedCoefficient?: number;
-  animationHeaderPosition?: Animated.SharedValue<number>;
-  animationHeaderHeight?: Animated.SharedValue<number>;
+  animationHeaderPosition?: SharedValue<number>;
+  animationHeaderHeight?: SharedValue<number>;
   panHeaderMaxOffset?: number;
   onPullEnough?: () => void;
   refreshControlColor?: string;
@@ -56,7 +58,9 @@ export type CollapsibleHeaderProps<T extends Route> = {
 };
 
 export type TabViewCustomRenders = {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   renderTabBarContainer: (children: any) => JSX.Element;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   renderSceneHeader: (children: any, props: any) => JSX.Element;
 };
 
@@ -70,22 +74,25 @@ export type GestureContainerProps<T extends Route> = Pick<
   };
 
 export interface RefreshControlProps {
-  refreshValue: Animated.SharedValue<number>;
-  refreshType: Animated.SharedValue<RefreshTypeEnum>;
-  progress: Animated.SharedValue<number>;
+  refreshValue: SharedValue<number>;
+  refreshType: SharedValue<RefreshTypeEnum>;
+  progress: SharedValue<number>;
   refreshControlColor?: string;
 }
 export type SceneProps<P extends object> = P & {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   ContainerView: any;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   forwardedRef: any;
   index: number;
   useExternalScrollView?: boolean;
 } & ScrollViewProps;
 
 export type UpdateSceneInfoParams = {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   scrollRef: any;
   index: number;
-  scrollY: Animated.SharedValue<number>;
+  scrollY: SharedValue<number>;
 };
 
 export type ScrollableView<T> = ComponentClass<T>;
@@ -96,13 +103,13 @@ export type ForwardRefType<T> =
   | null;
 
 export type GesturePanContext = {
-  startY: Animated.SharedValue<number>;
-  basyY: Animated.SharedValue<number>;
+  startY: SharedValue<number>;
+  basyY: SharedValue<number>;
 };
 export type TabHeaderContext = {
-  isSlidingHeader: Animated.SharedValue<boolean>;
-  shareAnimatedValue: Animated.SharedValue<number>;
-  isStartRefreshing: Animated.SharedValue<boolean>;
+  isSlidingHeader: SharedValue<boolean>;
+  shareAnimatedValue: SharedValue<number>;
+  isStartRefreshing: SharedValue<boolean>;
   minHeaderHeight: number;
   tabbarHeight: number;
   headerHeight: number;
@@ -110,10 +117,10 @@ export type TabHeaderContext = {
   refreshHeight: number;
   overflowPull: number;
   pullExtendedCoefficient: number;
-  headerTrans: Animated.SharedValue<number>;
+  headerTrans: SharedValue<number>;
   expectHeight: number;
   refHasChanged: (ref: NativeGesture) => void;
-  curIndexValue: Animated.SharedValue<number>;
+  curIndexValue: SharedValue<number>;
   updateSceneInfo: (e: UpdateSceneInfoParams) => void;
   scrollViewPaddingTop: number;
 } | null;
