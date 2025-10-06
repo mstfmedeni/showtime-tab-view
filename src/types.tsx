@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type React from "react";
 import type { ComponentClass } from "react";
 import type { ScrollViewProps } from "react-native";

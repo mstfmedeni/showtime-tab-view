@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { ScrollViewProps, StyleSheet } from "react-native";
+import type { ScrollViewProps } from "react-native";
+import { StyleSheet } from "react-native";
 
 import Animated, { useSharedValue } from "react-native-reanimated";
 

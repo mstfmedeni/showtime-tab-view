@@ -1,9 +1,6 @@
 import React from "react";
-import {
-  Platform,
-  ScrollView as RNScrollView,
-  ScrollViewProps,
-} from "react-native";
+import type { ScrollViewProps } from "react-native";
+import { Platform, ScrollView as RNScrollView } from "react-native";
 
 import Animated from "react-native-reanimated";
 

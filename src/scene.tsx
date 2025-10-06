@@ -4,7 +4,6 @@ import { StyleSheet } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   runOnJS,
-  scrollTo,
   useAnimatedRef,
   useAnimatedScrollHandler,
   useAnimatedStyle,
@@ -15,7 +14,6 @@ import Animated, {
 import { useSyncInitialPosition } from "./hooks/use-sync-initial-position";
 import { useHeaderTabContext } from "./context";
 import type { SceneProps } from "./types";
-import { SCROLLABLE_STATE } from "./contants";
 
 function mergeRefs<T>(
   ...inputRefs: (React.Ref<T> | undefined)[]
@@ -59,7 +57,6 @@ export function SceneComponent<P extends object>({
   const {
     shareAnimatedValue,
     expectHeight,
-    curIndexValue,
     refHasChanged,
     updateSceneInfo,
     scrollViewPaddingTop,

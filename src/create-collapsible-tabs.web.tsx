@@ -4,15 +4,17 @@ import React, {
   useState,
   useRef,
 } from "react";
-import { LayoutChangeEvent, StyleSheet, View } from "react-native";
+import type { LayoutChangeEvent } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-import {
+import { useSharedValue } from "react-native-reanimated";
+
+import type {
   NavigationState,
   SceneRendererProps,
-  TabBar,
-  TabView,
   TabViewProps,
 } from "react-native-tab-view";
+import { TabBar, TabView } from "react-native-tab-view";
 
 import { HeaderTabContext } from "./context";
 import { useSceneInfo } from "./hooks";
@@ -26,9 +28,13 @@ export {
   TabFlatList,
   TabScrollView,
   TabSectionList,
+  TabFlashList,
+} from "./scrollable-view";
+export type {
   TabScrollViewProps,
   TabFlatListProps,
   TabSectionListProps,
+  TabFlashListProps,
 } from "./scrollable-view";
 
 export type HeaderTabViewRef = {};
@@ -54,11 +60,11 @@ function CollapsibleHeaderTabView<T extends Route>(
   }: HeaderTabViewProps<T>,
   ref?: any
 ) {
-  const shareAnimatedValue = { value: 0 };
-  const headerTrans = { value: 0 };
-  const curIndexValue = { value: 0 };
-  const isSlidingHeader = { value: false };
-  const isStartRefreshing = { value: false };
+  const shareAnimatedValue = useSharedValue(0);
+  const headerTrans = useSharedValue(0);
+  const curIndexValue = useSharedValue(0);
+  const isSlidingHeader = useSharedValue(false);
+  const isStartRefreshing = useSharedValue(false);
 
   // layout
   const [tabbarHeight, setTabbarHeight] = useState(initTabbarHeight);

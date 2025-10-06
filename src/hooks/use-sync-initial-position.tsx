@@ -26,7 +26,6 @@ export const useSyncInitialPosition = (
       );
       opacityValue.value = 1;
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [headerHeight, minHeaderHeight, ref]
   );
 

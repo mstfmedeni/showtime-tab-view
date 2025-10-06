@@ -1,5 +1,6 @@
 import React from "react";
-import { FlatList as RNFlatList, FlatListProps, Platform } from "react-native";
+import type { FlatListProps } from "react-native";
+import { FlatList as RNFlatList, Platform } from "react-native";
 
 import Animated from "react-native-reanimated";
 

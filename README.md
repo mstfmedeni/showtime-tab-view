@@ -52,9 +52,17 @@ The API for this package is similar to [react-native-tab-view](https://github.co
 import React, { useCallback, useState } from "react";
 import { StatusBar, Text, View } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
-import { Route, TabView } from "@showtime-xyz/tab-view";
-import { TabFlashList } from "./tab-flash-list";
+import {
+  CollapsibleTabView,
+  Route,
+  TabFlashList,
+  TabFlatList,
+  TabScrollView,
+  TabSectionList,
+} from "@showtime-xyz/tab-view";
+
 const StatusBarHeight = StatusBar.currentHeight ?? 0;
+
 const TabScene = ({ route }: any) => {
   return (
     <TabFlashList
@@ -111,11 +119,13 @@ export function Example() {
       setIsRefreshing(false);
     }, 300);
   };
+
   const renderHeader = () => (
     <View style={{ height: 300, backgroundColor: "#000" }}></View>
   );
+
   return (
-    <TabView
+    <CollapsibleTabView
       onStartRefresh={onStartRefresh}
       isRefreshing={isRefreshing}
       navigationState={{ index, routes }}
@@ -133,7 +143,105 @@ export function Example() {
 
 ## API
 
-... API documentation will be available soon. 🔜
+### Components
+
+#### `CollapsibleTabView`
+
+The main component that provides a tab view with a collapsible header. All props from [react-native-tab-view](https://github.com/react-navigation/react-navigation/tree/main/packages/react-native-tab-view#readme) are supported, plus additional props for header behavior.
+
+#### Scrollable Components
+
+All scrollable components require an `index` prop to identify the tab.
+
+##### `TabScrollView`
+
+A wrapper around React Native's `ScrollView` with collapsible header support.
+
+```tsx
+import { TabScrollView } from "@showtime-xyz/tab-view";
+
+<TabScrollView index={0}>{/* Your content */}</TabScrollView>;
+```
+
+##### `TabFlatList`
+
+A wrapper around React Native's `FlatList` with collapsible header support.
+
+```tsx
+import { TabFlatList } from "@showtime-xyz/tab-view";
+
+<TabFlatList
+  index={0}
+  data={data}
+  renderItem={({ item }) => <Item item={item} />}
+  keyExtractor={(item) => item.id}
+/>;
+```
+
+##### `TabSectionList`
+
+A wrapper around React Native's `SectionList` with collapsible header support.
+
+```tsx
+import { TabSectionList } from "@showtime-xyz/tab-view";
+
+<TabSectionList
+  index={0}
+  sections={sections}
+  renderItem={({ item }) => <Item item={item} />}
+  renderSectionHeader={({ section }) => <Header title={section.title} />}
+/>;
+```
+
+##### `TabFlashList`
+
+A wrapper around Shopify's `FlashList` with collapsible header support. For optimal performance, especially with large lists.
+
+**Note:** You need to install `@shopify/flash-list` separately:
+
+```sh
+yarn add @shopify/flash-list
+```
+
+**Usage:**
+
+```tsx
+import { TabFlashList } from "@showtime-xyz/tab-view";
+
+<TabFlashList
+  index={0}
+  data={data}
+  renderItem={({ item }) => <Item item={item} />}
+  estimatedItemSize={100} // Optional in FlashList v2
+/>;
+```
+
+**FlashList v2 Features:**
+
+TabFlashList supports all FlashList v2 features including:
+
+- `masonry` - Enable masonry layout for grid-like interfaces
+- `onStartReached` - Callback for loading older content
+- `maintainVisibleContentPosition` - Maintain scroll position when content changes (enabled by default)
+- All FlashList hooks: `useLayoutState`, `useRecyclingState`, `useMappingHelper`
+
+Example with FlashList v2 features:
+
+```tsx
+<TabFlashList
+  index={0}
+  data={data}
+  renderItem={({ item }) => <Item item={item} />}
+  masonry
+  numColumns={2}
+  onStartReached={() => loadOlderContent()}
+  maintainVisibleContentPosition={{
+    autoscrollToBottomThreshold: 0.2,
+  }}
+/>
+```
+
+For more details, see the [FlashList documentation](https://shopify.github.io/flash-list/).
 
 ## Contributing
 
