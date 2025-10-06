@@ -1,6 +1,4 @@
 import React, { useEffect, useMemo } from "react";
-import type { FlashListProps } from "@shopify/flash-list";
-import { FlashList as ShopifyFlashList } from "@shopify/flash-list";
 import { Platform, StyleSheet } from "react-native";
 
 import Animated, {
@@ -12,16 +10,37 @@ import Animated, {
 
 import { useHeaderTabContext } from "../context";
 
-const AnimatePageView =
-  Platform.OS === "web"
-    ? ShopifyFlashList
-    : Animated.createAnimatedComponent(ShopifyFlashList);
+// Dynamic import for FlashList to handle optional dependency
+let FlashList: any;
 
-export type TabFlashListProps<T> = FlashListProps<T> & {
+try {
+  const flashListModule = require("@shopify/flash-list");
+  FlashList = flashListModule.FlashList;
+} catch (e) {
+  // FlashList is optional, will be undefined if not installed
+}
+
+const AnimatePageView = FlashList
+  ? Platform.OS === "web"
+    ? FlashList
+    : Animated.createAnimatedComponent(FlashList)
+  : null;
+
+export type TabFlashListProps<T> = {
   index: number;
+  data: readonly T[] | null | undefined;
+  renderItem: any;
+  estimatedItemSize?: number;
+  [key: string]: any;
 };
 
 function FlashListComponent<T>(props: TabFlashListProps<T>, ref: any) {
+  if (!AnimatePageView) {
+    throw new Error(
+      "TabFlashList requires @shopify/flash-list to be installed. Please run: yarn add @shopify/flash-list"
+    );
+  }
+
   const { index, onScroll, contentContainerStyle, ...restProps } = props;
 
   const flashListRef = useAnimatedRef<any>();
