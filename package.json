@@ -1,7 +1,7 @@
 {
-  "name": "@showtime-xyz/tab-view",
-  "version": "0.1.7",
-  "description": "A react native component, support collapse header and custom refresh control, power by Reanimated v2 & GestureHandler V2.",
+  "name": "@mstfmedeni/collapsible-tab-view",
+  "version": "0.2.0",
+  "description": "A react native component with collapsible header and custom refresh control, powered by Reanimated v4 & GestureHandler v2. Fork of @showtime-xyz/tab-view with additional features.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
@@ -41,16 +41,30 @@
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "android",
+    "collapsible",
+    "tab-view",
+    "reanimated",
+    "gesture-handler",
+    "flashlist",
+    "collapsible-header",
+    "pull-to-refresh"
   ],
-  "repository": "https://github.com/showtime-xyz/showtime-tab-view",
-  "author": "alantoa <toacncom@gmail.com> (https://github.com/showtime-xyz)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mstfmedeni/showtime-tab-view.git"
+  },
+  "author": "Mustafa Medeni <mstfmedeni@gmail.com> (https://github.com/mstfmedeni)",
+  "contributors": [
+    "alantoa <toacncom@gmail.com> (https://github.com/showtime-xyz)"
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/showtime-xyz/showtime-tab-view/issues"
+    "url": "https://github.com/mstfmedeni/showtime-tab-view/issues"
   },
-  "homepage": "https://github.com/showtime-xyz/showtime-tab-view#readme",
+  "homepage": "https://github.com/mstfmedeni/showtime-tab-view#readme",
   "publishConfig": {
+    "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {

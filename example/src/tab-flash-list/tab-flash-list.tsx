@@ -3,7 +3,7 @@ import React from "react";
 import type { FlashListProps } from "@shopify/flash-list";
 import { FlashList } from "@shopify/flash-list";
 
-import { useHeaderTabContext } from "@showtime-xyz/tab-view";
+import { useHeaderTabContext } from "@mstfmedeni/collapsible-tab-view";
 
 import { TabFlashListScrollView } from "./tab-flash-list-scroll-view";
 

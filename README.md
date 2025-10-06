@@ -1,14 +1,28 @@
-<img align="right" width="160" alt="showtime tab view logo" src="./example/assets/icon.png" />
-<div >
-  <h1>Showtime Tab View</h1>
-</div>
+<img align="right" width="160" alt="collapsible tab view logo" src="./example/assets/icon.png" />
+
+# Collapsible Tab View
+
+[![npm version](https://img.shields.io/npm/v/@mstfmedeni/collapsible-tab-view.svg)](https://www.npmjs.com/package/@mstfmedeni/collapsible-tab-view)
+[![npm downloads](https://img.shields.io/npm/dm/@mstfmedeni/collapsible-tab-view.svg)](https://www.npmjs.com/package/@mstfmedeni/collapsible-tab-view)
+[![license](https://img.shields.io/npm/l/@mstfmedeni/collapsible-tab-view.svg)](https://github.com/mstfmedeni/showtime-tab-view/blob/main/LICENSE)
 
 A React Native component that supports a collapsible header and custom refresh control, powered by [Reanimated v4](https://docs.swmansion.com/react-native-reanimated/) and [GestureHandler v2](https://docs.swmansion.com/react-native-gesture-handler/docs/).
+
 <video align="right" width="160" alt="This library helped you? Consider sponsoring!" src="https://user-images.githubusercontent.com/37520667/212389901-764422ef-cf1b-48fc-87af-cfbe7ad1f6e2.mp4" />
+
+> **Note:** This is a fork of [@showtime-xyz/tab-view](https://github.com/showtime-xyz/showtime-tab-view) with additional features and improvements, including:
+> - ✅ **TabFlashList** component with FlashList v2 support
+> - ✅ **TypeScript 5.9** with improved type safety
+> - ✅ **ESLint 9** with modern flat config
+> - ✅ **Reanimated v4** compatibility
+> - ✅ **Enhanced documentation** and examples
 
 ## What
 
-This is a React Native tab view component that wraps gestures and animations on top of [react-native-tab-view](https://github.com/react-navigation/react-navigation/tree/main/packages/react-native-tab-view#readme). The source code can be found [here](https://github.com/showtime-xyz/showtime-frontend/tree/staging/packages/design-system/collapsible-tab-view). You can see this [context on Twitter](https://twitter.com/alan_toa/status/1564429150152458241).
+This is a React Native tab view component that wraps gestures and animations on top of [react-native-tab-view](https://github.com/react-navigation/react-navigation/tree/main/packages/react-native-tab-view#readme).
+
+**Original Repository:** [@showtime-xyz/tab-view](https://github.com/showtime-xyz/showtime-tab-view)
+**Original Author:** [@alantoa](https://github.com/alantoa)
 
 ## Features
 
@@ -47,10 +61,14 @@ yarn add @shopify/flash-list
 
 > **Note:** Make sure to follow the setup instructions for [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started/) and [react-native-gesture-handler](https://docs.swmansion.com/react-native-gesture-handler/docs/fundamentals/installation) as they require additional native configuration.
 
-And then, you can install the package using the following command:
+### Install Package
 
 ```sh
-yarn add @showtime-xyz/tab-view
+# Using yarn
+yarn add @mstfmedeni/collapsible-tab-view
+
+# Using npm
+npm install @mstfmedeni/collapsible-tab-view
 ```
 
 ## Examples
@@ -75,7 +93,7 @@ import {
   TabFlatList,
   TabScrollView,
   TabSectionList,
-} from "@showtime-xyz/tab-view";
+} from "@mstfmedeni/collapsible-tab-view";
 
 const StatusBarHeight = StatusBar.currentHeight ?? 0;
 
@@ -174,7 +192,7 @@ All scrollable components require an `index` prop to identify the tab.
 A wrapper around React Native's `ScrollView` with collapsible header support.
 
 ```tsx
-import { TabScrollView } from "@showtime-xyz/tab-view";
+import { TabScrollView } from "@mstfmedeni/collapsible-tab-view";
 
 <TabScrollView index={0}>{/* Your content */}</TabScrollView>;
 ```
@@ -184,7 +202,7 @@ import { TabScrollView } from "@showtime-xyz/tab-view";
 A wrapper around React Native's `FlatList` with collapsible header support.
 
 ```tsx
-import { TabFlatList } from "@showtime-xyz/tab-view";
+import { TabFlatList } from "@mstfmedeni/collapsible-tab-view";
 
 <TabFlatList
   index={0}
@@ -199,7 +217,7 @@ import { TabFlatList } from "@showtime-xyz/tab-view";
 A wrapper around React Native's `SectionList` with collapsible header support.
 
 ```tsx
-import { TabSectionList } from "@showtime-xyz/tab-view";
+import { TabSectionList } from "@mstfmedeni/collapsible-tab-view";
 
 <TabSectionList
   index={0}
@@ -222,7 +240,7 @@ yarn add @shopify/flash-list
 **Usage:**
 
 ```tsx
-import { TabFlashList } from "@showtime-xyz/tab-view";
+import { TabFlashList } from "@mstfmedeni/collapsible-tab-view";
 
 <TabFlashList
   index={0}
