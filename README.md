@@ -8,7 +8,8 @@
 
 A React Native component that supports a collapsible header and custom refresh control, powered by [Reanimated v4](https://docs.swmansion.com/react-native-reanimated/) and [GestureHandler v2](https://docs.swmansion.com/react-native-gesture-handler/docs/).
 
-<video align="right" width="160" alt="This library helped you? Consider sponsoring!" src="https://user-images.githubusercontent.com/37520667/212389901-764422ef-cf1b-48fc-87af-cfbe7ad1f6e2.mp4" />
+[<video align="right" width="160" height="160" alt="This library helped you? Consider sponsoring!" src="https://user-images.githubusercontent.com/37520667/212389901-764422ef-cf1b-48fc-87af-cfbe7ad1f6e2.mp4" />
+](https://user-images.githubusercontent.com/37520667/212389901-764422ef-cf1b-48fc-87af-cfbe7ad1f6e2.mp4)
 
 > **Note:** This is a fork of [@showtime-xyz/tab-view](https://github.com/showtime-xyz/showtime-tab-view) with additional features and improvements, including:
 > - ✅ **TabFlashList** component with FlashList v2 support
