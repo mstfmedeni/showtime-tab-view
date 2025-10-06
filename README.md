@@ -3,7 +3,7 @@
   <h1>Showtime Tab View</h1>
 </div>
 
-A React Native component that supports a collapsible header and custom refresh control, powered by [Reanimated v2](https://docs.swmansion.com/react-native-reanimated/) and [GestureHandler V2](https://docs.swmansion.com/react-native-gesture-handler/docs/).
+A React Native component that supports a collapsible header and custom refresh control, powered by [Reanimated v4](https://docs.swmansion.com/react-native-reanimated/) and [GestureHandler v2](https://docs.swmansion.com/react-native-gesture-handler/docs/).
 <video align="right" width="160" alt="This library helped you? Consider sponsoring!" src="https://user-images.githubusercontent.com/37520667/212389901-764422ef-cf1b-48fc-87af-cfbe7ad1f6e2.mp4" />
 
 ## What
@@ -12,24 +12,40 @@ This is a React Native tab view component that wraps gestures and animations on 
 
 ## Features
 
-- Collapsible header.
-- Support for [FlashList](https://shopify.github.io/flash-list/). \*(see [this](./example/src/tab-flash-list/index.tsx))
-- Custom refresh control.
-- Bounce effect support on iOS.
-- Support for iOS, Android, and Web.
-- Zoom header when pulling to refresh. \*(see this [thread](https://github.com/showtime-xyz/showtime-frontend/discussions/1471))
+- 🎯 **Collapsible header** - Smooth collapsing animation powered by Reanimated v4
+- ⚡ **High Performance** - Built with Reanimated v4 for 60fps+ animations
+- 📜 **FlashList Support** - Optional integration with [FlashList v2](https://shopify.github.io/flash-list/) for optimal list performance
+- 🔄 **Custom Refresh Control** - Pull-to-refresh with customizable animations
+- 📱 **Cross-Platform** - Full support for iOS, Android, and Web
+- 🎨 **Customizable** - Extensive styling and behavior customization options
+- 🌊 **Bounce Effect** - Natural iOS-style bounce animations
+- 🔍 **Zoom Header** - Optional zoom effect on pull-to-refresh ([see example](https://github.com/showtime-xyz/showtime-frontend/discussions/1471))
+- 📦 **TypeScript** - Full TypeScript support with comprehensive type definitions
 
 ## Installation
 
-Before installing this package, you should first follow the installation instructions for:
+### Prerequisites
 
-- [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/)
-- [react-native-gesture-handler v2](https://docs.swmansion.com/react-native-gesture-handler/)
-- [react-native-pager-view](https://docs.expo.dev/versions/latest/sdk/view-pager/)
+This package requires the following peer dependencies to be installed in your project:
 
-FlashList is not a required dependency, but for optimal performance, it is recommended to use FlashList instead of the standard FlatList implementation
+**Required:**
+- [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/) (>= 4.0.0)
+- [react-native-gesture-handler](https://docs.swmansion.com/react-native-gesture-handler/) (>= 2.0.0)
+- [react-native-pager-view](https://github.com/callstack/react-native-pager-view) (>= 5.0.0)
+- [react-native-tab-view](https://github.com/react-navigation/react-navigation/tree/main/packages/react-native-tab-view) (> 3.3.0)
 
-- [FlashList by Shopify](https://shopify.github.io/flash-list/docs/)
+**Optional (for TabFlashList):**
+- [@shopify/flash-list](https://shopify.github.io/flash-list/docs/) - For high-performance lists
+
+```sh
+# Install required dependencies
+yarn add react-native-reanimated react-native-gesture-handler react-native-pager-view react-native-tab-view
+
+# Optional: Install FlashList for better performance
+yarn add @shopify/flash-list
+```
+
+> **Note:** Make sure to follow the setup instructions for [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started/) and [react-native-gesture-handler](https://docs.swmansion.com/react-native-gesture-handler/docs/fundamentals/installation) as they require additional native configuration.
 
 And then, you can install the package using the following command:
 
