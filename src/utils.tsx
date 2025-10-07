@@ -7,10 +7,16 @@ import {
   withTiming,
 } from "react-native-reanimated";
 
-export function _ScrollTo(ref: never, x: number, y: number, animated: boolean) {
+export function _ScrollTo(ref: any, x: number, y: number, animated: boolean) {
   "worklet";
   if (!ref) return;
-  scrollTo(ref, x, y, animated);
+  // Check if ref has current property and it's not null
+  if (ref.current === null || ref.current === undefined) return;
+  try {
+    scrollTo(ref, x, y, animated);
+  } catch (e) {
+    // Silently catch scroll errors when ref is not ready
+  }
 }
 
 export const isIOS = Platform.OS === "ios";
