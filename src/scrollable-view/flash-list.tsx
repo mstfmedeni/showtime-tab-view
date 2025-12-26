@@ -62,19 +62,19 @@ function FlashListComponent<T>(props: TabFlashListProps<T>, ref: any) {
     [onScroll]
   );
 
+  // Register scene info - useAnimatedRef will be attached by React
   useEffect(() => {
-    if (flashListRef?.current) {
-      updateSceneInfo({
-        scrollRef: flashListRef,
-        index,
-        scrollY,
-      });
-    }
+    updateSceneInfo({
+      scrollRef: flashListRef,
+      index,
+      scrollY,
+    });
   }, [flashListRef, index, scrollY, updateSceneInfo]);
 
   const mergedRefs = (instance: any) => {
+    // useAnimatedRef must be called as a function, not assigned to .current
     if (flashListRef) {
-      (flashListRef as any).current = instance;
+      (flashListRef as any)(instance);
     }
     if (ref) {
       if (typeof ref === "function") {
