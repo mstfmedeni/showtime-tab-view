@@ -104,8 +104,13 @@ export const GestureContainer = React.forwardRef<
   //#endregion
 
   //#region hooks
-  const { childScrollRef, childScrollYTrans, sceneIsReady, updateSceneInfo } =
-    useSceneInfo(curIndexValue);
+  const {
+    childScrollRef,
+    childScrollYTrans,
+    sceneIsReady,
+    updateSceneInfo,
+    sceneVersion,
+  } = useSceneInfo(curIndexValue);
   //#endregion
 
   //#region state
@@ -171,7 +176,13 @@ export const GestureContainer = React.forwardRef<
       scrollY + 0.1,
       false
     );
-  }, [curIndexValue, childScrollRef, childScrollYTrans, sceneIsReady]);
+  }, [
+    curIndexValue,
+    childScrollRef,
+    childScrollYTrans,
+    sceneIsReady,
+    sceneVersion,
+  ]);
 
   const onTabsStartRefresh = useCallback(() => {
     "worklet";
@@ -220,6 +231,7 @@ export const GestureContainer = React.forwardRef<
     dragIndex,
     slideIndex,
     headerTrans,
+    sceneVersion,
   ]);
 
   const refHasChanged = useCallback(
@@ -339,6 +351,7 @@ export const GestureContainer = React.forwardRef<
       headerTransStartY,
       overflowHeight,
       scrollEnabled,
+      sceneVersion,
     ]
   );
 
@@ -466,6 +479,7 @@ export const GestureContainer = React.forwardRef<
       childGestures,
       refreshHeight,
       enableGestureRunOnJS,
+      sceneVersion,
     ]
   );
 
@@ -507,6 +521,43 @@ export const GestureContainer = React.forwardRef<
   ]);
 
   //#region animation hooks
+
+  // Sync new tab's scroll position when tab index changes
+  const syncNewTabScroll = useCallback(
+    (index: number, targetY: number) => {
+      const ref = childScrollRef[index];
+      if (ref) {
+        setTimeout(() => {
+          try {
+            if (ref.current?.scrollTo) {
+              ref.current.scrollTo({ y: targetY, animated: false });
+            } else if (ref.current?.scrollToOffset) {
+              ref.current.scrollToOffset({ offset: targetY, animated: false });
+            } else {
+              _ScrollTo(ref as never, 0, targetY, false);
+            }
+          } catch (e) {
+            console.log("syncNewTabScroll error", e);
+            // Silently handle scroll errors
+          }
+        }, 50);
+      }
+    },
+    [childScrollRef]
+  );
+
+  useAnimatedReaction(
+    () => curIndexValue.value,
+    (currentIndex, previousIndex) => {
+      if (previousIndex === null || previousIndex === undefined) return;
+      if (currentIndex === previousIndex) return;
+
+      const targetScrollY = Math.min(shareAnimatedValue.value, calcHeight);
+      runOnJS(syncNewTabScroll)(currentIndex, targetScrollY);
+    },
+    [calcHeight, syncNewTabScroll]
+  );
+
   useAnimatedReaction(
     () => {
       return tabsRefreshTrans.value;

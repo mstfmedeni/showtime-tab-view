@@ -83,6 +83,14 @@ function FlashListComponent<T>(props: TabFlashListProps<T>, ref: any) {
         ref.current = instance;
       }
     }
+    // Re-register scene info when ref is set
+    if (instance) {
+      updateSceneInfo({
+        scrollRef: flashListRef,
+        index,
+        scrollY,
+      });
+    }
   };
 
   const mergedContentContainerStyle = useMemo(

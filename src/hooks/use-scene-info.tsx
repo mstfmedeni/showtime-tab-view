@@ -29,20 +29,36 @@ export const useSceneInfo = (curIndexValue: SharedValue<number>) => {
       let didUpdate = false;
 
       if (scrollRef && childScrollRefRef.current[index] !== scrollRef) {
-        childScrollRefRef.current[index] = scrollRef;
+        childScrollRefRef.current = {
+          ...childScrollRefRef.current,
+          [index]: scrollRef,
+        };
         didUpdate = true;
       }
 
       if (scrollY && childScrollYTransRef.current[index] !== scrollY) {
-        childScrollYTransRef.current[index] = scrollY;
+        childScrollYTransRef.current = {
+          ...childScrollYTransRef.current,
+          [index]: scrollY,
+        };
         didUpdate = true;
+      }
+
+      // Mark this specific index as ready
+      const hasRef = childScrollRefRef.current[index] !== undefined;
+      const hasScrollY = childScrollYTransRef.current[index] !== undefined;
+      if (hasRef && hasScrollY && !sceneIsReady.value[index]) {
+        sceneIsReady.value = {
+          ...sceneIsReady.value,
+          [index]: true,
+        };
       }
 
       if (didUpdate) {
         setUpdateCounter((c) => c + 1);
       }
     },
-    []
+    [sceneIsReady]
   );
 
   const updateIsReady = useCallback(() => {
@@ -90,5 +106,6 @@ export const useSceneInfo = (curIndexValue: SharedValue<number>) => {
     childScrollYTrans: childScrollYTransRef.current,
     sceneIsReady,
     updateSceneInfo,
+    sceneVersion: updateCounter,
   };
 };
