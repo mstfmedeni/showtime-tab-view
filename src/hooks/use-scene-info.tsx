@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import type { SharedValue } from "react-native-reanimated";
 import {
@@ -13,37 +13,49 @@ export const useSceneInfo = (curIndexValue: SharedValue<number>) => {
   // Are all the fields on the scene ready
   const sceneIsReady = useSharedValue<{ [index: number]: boolean }>({});
 
-  const [childScrollYTrans, setChildScrollYTrans] = useState<{
+  // Use refs instead of state so worklets can access the latest values
+  const childScrollYTransRef = useRef<{
     [index: number]: SharedValue<number>;
   }>({});
-  const [childScrollRef, setChildScrollRef] = useState<{
+  const childScrollRefRef = useRef<{
     [index: number]: any;
   }>({});
 
+  // State to trigger re-renders when refs update
+  const [updateCounter, setUpdateCounter] = useState(0);
+
   const updateSceneInfo = useCallback(
     ({ index, scrollRef, scrollY }: UpdateSceneInfoParams) => {
-      if (scrollRef && childScrollRef[index] !== scrollRef) {
-        setChildScrollRef((preChildRef) => {
-          return { ...preChildRef, [index]: scrollRef };
-        });
+      let didUpdate = false;
+
+      if (scrollRef && childScrollRefRef.current[index] !== scrollRef) {
+        childScrollRefRef.current[index] = scrollRef;
+        didUpdate = true;
       }
 
-      if (scrollY && childScrollYTrans[index] !== scrollY) {
-        setChildScrollYTrans((_p) => {
-          return { ..._p, [index]: scrollY };
-        });
+      if (scrollY && childScrollYTransRef.current[index] !== scrollY) {
+        childScrollYTransRef.current[index] = scrollY;
+        didUpdate = true;
+      }
+
+      if (didUpdate) {
+        setUpdateCounter((c) => c + 1);
       }
     },
     []
   );
 
-  const aArray = [childScrollRef, childScrollYTrans];
-
   const updateIsReady = useCallback(() => {
     const mIndex = curIndexValue.value;
-    const isReady = aArray.every((item) =>
-      Object.prototype.hasOwnProperty.call(item, mIndex)
+    const hasRef = Object.prototype.hasOwnProperty.call(
+      childScrollRefRef.current,
+      mIndex
     );
+    const hasScrollY = Object.prototype.hasOwnProperty.call(
+      childScrollYTransRef.current,
+      mIndex
+    );
+    const isReady = hasRef && hasScrollY;
 
     if (isReady) {
       sceneIsReady.value = {
@@ -51,12 +63,12 @@ export const useSceneInfo = (curIndexValue: SharedValue<number>) => {
         [mIndex]: isReady,
       };
     }
-  }, [curIndexValue, sceneIsReady, ...aArray]);
+  }, [curIndexValue, sceneIsReady]);
 
-  // We should call function updateIsReady when the elements in the aArray change
+  // We should call function updateIsReady when the refs update
   useEffect(() => {
     updateIsReady();
-  }, [updateIsReady, ...aArray]);
+  }, [updateIsReady, updateCounter]);
 
   /**
    * If all of the elements in the Aarray have changed, the tabIndex is switched.
@@ -74,8 +86,8 @@ export const useSceneInfo = (curIndexValue: SharedValue<number>) => {
   );
 
   return {
-    childScrollRef,
-    childScrollYTrans,
+    childScrollRef: childScrollRefRef.current,
+    childScrollYTrans: childScrollYTransRef.current,
     sceneIsReady,
     updateSceneInfo,
   };

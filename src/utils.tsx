@@ -10,11 +10,10 @@ import {
 export function _ScrollTo(ref: any, x: number, y: number, animated: boolean) {
   "worklet";
   if (!ref) return;
-  // Check if ref has current property and it's not null
-  if (ref.current === null || ref.current === undefined) return;
+  // useAnimatedRef works differently - scrollTo handles the ref internally
   try {
     scrollTo(ref, x, y, animated);
-  } catch (e) {
+  } catch {
     // Silently catch scroll errors when ref is not ready
   }
 }

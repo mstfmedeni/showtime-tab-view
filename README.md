@@ -31,6 +31,7 @@ This is a React Native tab view component that wraps gestures and animations on 
 - ⚡ **High Performance** - Built with Reanimated v4 for 60fps+ animations
 - 📜 **FlashList Support** - Optional integration with [FlashList v2](https://shopify.github.io/flash-list/) for optimal list performance
 - 🔄 **Custom Refresh Control** - Pull-to-refresh with customizable animations
+- 👆 **Header Scroll Gesture** - Scroll page content by dragging on the header area
 - 📱 **Cross-Platform** - Full support for iOS, Android, and Web
 - 🎨 **Customizable** - Extensive styling and behavior customization options
 - 🌊 **Bounce Effect** - Natural iOS-style bounce animations
@@ -277,6 +278,17 @@ Example with FlashList v2 features:
 ```
 
 For more details, see the [FlashList documentation](https://shopify.github.io/flash-list/).
+
+### Header Scroll Gesture
+
+The collapsible header supports scroll gestures, allowing users to scroll the page content by dragging on the header area. This provides a more intuitive user experience, especially for profile screens or pages with large headers.
+
+**How it works:**
+- When the user drags up/down on the header, the underlying scroll view content moves accordingly
+- The gesture includes momentum/decay animation for natural scrolling feel
+- Works seamlessly with the collapsible header animation
+
+This feature is enabled by default and requires no additional configuration.
 
 ## Contributing
 

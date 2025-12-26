@@ -577,6 +577,18 @@ export const GestureContainer = React.forwardRef<
     }
   );
 
+  // Continuous sync when headerTrans changes during sliding
+  useAnimatedReaction(
+    () => headerTrans.value,
+    (currentValue) => {
+      if (!isSlidingHeader.value) return;
+      if (slideIndex.value !== curIndexValue.value) return;
+      const scrollRef = childScrollRef[curIndexValue.value];
+      if (!scrollRef) return;
+      _ScrollTo(scrollRef as never, 0, currentValue || 0, false);
+    }
+  );
+
   const headerTransValue = useDerivedValue(() => {
     const headerTransY = interpolate(
       shareAnimatedValue.value,

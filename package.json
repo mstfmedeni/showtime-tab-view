@@ -1,6 +1,6 @@
 {
   "name": "@mstfmedeni/collapsible-tab-view",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A react native component with collapsible header and custom refresh control, powered by Reanimated v4 & GestureHandler v2. Fork of @showtime-xyz/tab-view with additional features.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -76,6 +76,8 @@
     "@types/jest": "^30.0.0",
     "@types/react": "~19.2.0",
     "@types/react-native": "0.73.0",
+    "@typescript-eslint/eslint-plugin": "^8",
+    "@typescript-eslint/parser": "^8",
     "commitlint": "^20.1.0",
     "del-cli": "^7.0.0",
     "eslint": "^9.37.0",

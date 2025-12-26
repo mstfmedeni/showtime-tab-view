@@ -104,14 +104,14 @@ export function SceneComponent<P extends object>({
   useEffect(() => {
     refHasChanged?.(nativeGestureRef.current);
   }, [refHasChanged]);
+
+  // Register scene info - useAnimatedRef will be attached by React
   useEffect(() => {
-    if (scollViewRef?.current) {
-      updateSceneInfo({
-        scrollRef: scollViewRef,
-        index,
-        scrollY,
-      });
-    }
+    updateSceneInfo({
+      scrollRef: scollViewRef,
+      index,
+      scrollY,
+    });
   }, [scollViewRef, index, scrollY, updateSceneInfo]);
 
   return (

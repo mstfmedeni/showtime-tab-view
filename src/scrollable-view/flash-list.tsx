@@ -16,7 +16,7 @@ let FlashList: any;
 try {
   const flashListModule = require("@shopify/flash-list");
   FlashList = flashListModule.FlashList;
-} catch (e) {
+} catch {
   // FlashList is optional, will be undefined if not installed
 }
 
